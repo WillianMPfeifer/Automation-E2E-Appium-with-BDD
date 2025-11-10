@@ -1,0 +1,13 @@
+# Appium
+Appium-Python-Client==3.1.0
+
+# BDD Framework
+behave==1.2.6
+
+# Relatórios
+allure-behave==2.13.2
+behave-html-formatter==0.9.10
+
+# Utilitárioscien
+python-dotenv==1.0.0
+pytest==7.4.3

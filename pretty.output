@@ -1,0 +1,20 @@
+Funcionalidade: Autenticação no aplicativo Digi Professores # tests/features/login/autenticacao.feature:3
+  Como um professor
+  Quero fazer login no aplicativo
+  Para acessar as funcionalidades do sistema
+  Contexto:   # tests/features/login/autenticacao.feature:8
+
+  Cenário: Login com credenciais válidas                # tests/features/login/autenticacao.feature:11
+    Dado que o aplicativo está aberto na tela de login  # tests/features/steps/autenticacao_steps.py:4
+    Quando eu preencho o CPF "123.456.789-00"           # None
+    E eu preencho a senha "12345678Ab"                  # None
+    E eu clico no botão de login                        # None
+    Então eu devo ser redirecionado para a tela inicial # None
+
+  Cenário: Login com credenciais inválidas             # tests/features/login/autenticacao.feature:17
+    Dado que o aplicativo está aberto na tela de login # tests/features/steps/autenticacao_steps.py:4
+    Quando eu preencho o CPF "000.000.000-00"          # None
+    E eu preencho a senha "senhaErrada"                # None
+    E eu clico no botão de login                       # None
+    Então eu devo ver uma mensagem de erro             # None
+
