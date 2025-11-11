@@ -43,3 +43,10 @@ Thumbs.db
 
 # Environment variables
 .env
+
+# app files
+*.apk
+*.app
+
+# extensions
+*pretty.output
