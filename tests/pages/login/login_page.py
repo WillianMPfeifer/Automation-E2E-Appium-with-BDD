@@ -1,34 +1,37 @@
 from tests.pages.common_functions import CommonFunctions
 from tests.locators.login.autenticacao import LoginLocators
 
-class PaginaLogin(CommonFunctions):
+class LoginPage(CommonFunctions):
     
     def __init__(self, driver):
         super().__init__(driver)
         self.locators = LoginLocators
     
-    def aceitar_termos(self):
-        self.click(self.locators.ACCEPT_TERMS_BUTTON)
+    def accept_terms_and_enter(self):
+        self.click(self.locators.ACCEPT_TERMS_CHECKBOX)
 
-    def preencher_cpf_cnpj(self, cpf_cnpj):
-        self.send_keys(self.locators.CPF_CNPJ_INPUT, cpf_cnpj)
+        self.click(self.locators.ACCEPT_BUTTON)
+
+    def fill_cpf_cnpj(self, cpf_cnpj):
+        self.send_keys(self.locators.CPF_FIELD, cpf_cnpj)
     
-    def preencher_senha(self, senha):
-        self.send_keys(self.locators.PASSWORD_INPUT, senha)
+    def fill_password(self, password):
+        self.send_keys(self.locators.PASSWORD_FIELD, password)
     
-    def clicar_botao_login(self):
+    def click_login_button(self):
         self.click(self.locators.LOGIN_BUTTON)
         self.hide_keyboard()
     
-    def fazer_login(self, cpf_cnpj, senha):
-        self.preencher_cpf_cnpj(cpf_cnpj)
-        self.preencher_senha(senha)
-        self.clicar_botao_login()
+    def click_continue_button(self):
+        self.click(self.locators.CONTINUE_BUTTON)
+
+    def verify_home_page(self, ):
+        return self.is_element_visible(self.locators.HOME_SCREEN_IDENTIFIER, timeout=5)
     
-    def verificar_erro_visivel(self):
+    def verify_error_visible(self):
         return self.is_element_visible(self.locators.ERROR_MESSAGE, timeout=5)
     
-    def obter_mensagem_erro(self):
-        if self.verificar_erro_visivel():
+    def get_error_message(self):
+        if self.verify_error_visible():
             return self.get_text(self.locators.ERROR_MESSAGE)
         return None
