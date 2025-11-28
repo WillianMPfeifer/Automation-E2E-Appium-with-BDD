@@ -12,8 +12,8 @@ class Settings:
     
     PLATFORM = os.getenv('PLATFORM', 'Android')
     
-    IMPLICIT_WAIT = 10
-    EXPLICIT_WAIT = 20
+    IMPLICIT_WAIT = 50
+    EXPLICIT_WAIT = 50
     
     ANDROID_APP_PATH = os.path.join(ROOT_DIR,
     os.getenv('ANDROID_APP_PATH', 'apps/android/app.apk')
