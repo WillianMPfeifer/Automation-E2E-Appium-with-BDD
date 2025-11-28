@@ -1,0 +1,51 @@
+[project]
+name = "digi-professores"
+version = "0.1.0"
+description = "Testes automatizados E2E do aplicativo Digi Professores (Appium + Behave + Allure)"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Willian Pfeifer", email = "willian.pfeifer@digifred.com.br" }
+]
+
+dependencies = [
+    "appium-python-client>=4.0.0", # Ajustado para a versão estável atual
+    "selenium>=4.10.0",
+    "requests>=2.30.0",
+]
+
+# --- Solução para o erro de "Multiple top-level packages" ---
+# Ignora pastas de arquivos (apks, relatórios) na hora do build
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["apps", "reports", "tests"]
+
+# --- Dependências de Desenvolvimento ---
+[dependency-groups]
+dev = [
+    "behave>=1.2.6",
+    "allure-behave>=2.13.5",
+    "ruff>=0.3.0",
+]
+
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# --- Configuração do Behave (Seu Executor de Testes) ---
+[tool.behave]
+paths = ["tests/features"]
+format = ["pretty"]
+show_skipped = false
+
+# --- Configuração do Ruff (Substitui Black, Isort e Flake8) ---
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"] # E=Style, F=Logic, I=Imports
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

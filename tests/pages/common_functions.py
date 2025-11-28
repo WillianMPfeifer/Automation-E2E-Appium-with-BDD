@@ -24,6 +24,7 @@ class CommonFunctions:
         wait_time = timeout if timeout else Settings.EXPLICIT_WAIT
         wait = WebDriverWait(self.driver, wait_time)
         element = wait.until(EC.element_to_be_clickable(locator))
+        wait.until(lambda driver: element.get_attribute("enabled") == "true")
         element.click()
     
     def send_keys(self, locator, text, clear_first=True):
