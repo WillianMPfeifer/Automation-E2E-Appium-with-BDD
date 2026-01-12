@@ -1,114 +1,94 @@
-# Testes E2E - Digi Pais e Alunos (Mobile)
+# Mobile Test Automation Template (Python + Appium + Behave)
 
-Projeto de testes automatizados mobile utilizando **Appium + Behave
-(BDD)** para garantir a qualidade do aplicativo **Digi Pais e Alunos**.
+Este repositório fornece uma arquitetura base robusta para automação de testes **End-to-End (E2E)** em dispositivos móveis (Android/iOS). O projeto utiliza o padrão de projeto **Page Object Model (POM)** integrado ao desenvolvimento orientado a comportamento (**BDD**).
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Tecnologias e Ferramentas
 
--   **Python 3.14**
--   **Appium**
--   **Behave**
--   **Selenium WebDriver**
--   **Ruff**
--   **UV**
+* **Linguagem:** [Python](https://www.python.org/)
+* **Driver de Automação:** [Appium](https://appium.io/)
+* **Framework BDD:** [Behave](https://behave.readthedocs.io/)
+* **Gerenciamento de Pacotes:** [UV](https://github.com/astral-sh/uv) (Alta performance)
+* **Code Quality:** [Ruff](https://github.com/astral-sh/ruff)
+* **Relatórios:** Allure Report & HTML Formatter
 
 ## 📁 Estrutura do Projeto
 
-    /
-    ├── apps/               
-    ├── reports/            
-    ├── tests/
-    │   ├── config/         
-    │   ├── features/       
-    │   ├── pages/          
-    │   └── utils/          
-    ├── behave.ini          
-    └── pyproject.toml      
+A arquitetura foi desenhada para ser escalável e de fácil manutenção:
 
-## ▶️ Executando os Testes
+```text
+├── apps/                # Binários do aplicativo (.apk / .ipa)
+├── reports/             # Artefatos de execução e logs
+├── tests/
+│   ├── config/          # Capabilities e configurações do driver
+│   ├── features/        # Especificações em Gherkin
+│   │   └── steps/       # Implementação dos steps (Python)
+│   ├── pages/           # Page Objects (Lógica de interação)
+│   │   └── locators/    # Seletores de elementos (Separados por tela)
+│   └── utils/           # Métodos auxiliares e helpers
+├── behave.ini           # Configurações do framework Behave
+└── pyproject.toml       # Dependências e configurações do projeto (UV/Ruff)
 
-### Modo Debug
+```
 
-``` bash
+## 🛠️ Configuração e Instalação
+
+1. **Pré-requisitos:**
+* Python 3.12+
+* Appium Server instalado e configurado.
+* Android SDK / Xcode (conforme a plataforma alvo).
+
+
+2. **Instalação de dependências:**
+Este projeto utiliza o `uv` para gestão rápida de pacotes.
+```bash
+pip install uv
+uv sync
+
+```
+
+
+
+## ▶️ Execução dos Testes
+
+### Local / Debug
+
+Execução com saída detalhada no console:
+
+```bash
 uv run behave --format plain --no-capture
+
 ```
 
-### Modo CI/CD
+### Execução por Tag
 
-``` bash
-uv run behave --format progress --no-capture
+Ideal para fumaça (smoke) ou regressão:
+
+```bash
+uv run behave --tags=@smoke
+
 ```
 
-## 📌 Comandos Úteis
+### Geração de Relatórios
 
-### Iniciar Appium
+Para gerar e visualizar o relatório **Allure**:
 
-``` bash
-appium
-```
-
-### Feature específica
-
-``` bash
-uv run behave tests/features/login/autenticacao.feature --format plain --no-capture
-```
-
-### Por tags
-
-``` bash
-uv run behave --tags=@smoke --format plain --no-capture
-```
-
-### Relatório HTML
-
-``` bash
-uv run behave -f html -o reports/report.html
-```
-
-### Allure
-
-``` bash
+```bash
 uv run behave -f allure_behave.formatter:AllureFormatter -o reports/allure
 allure serve reports/allure
+
 ```
 
-## 📝 Desenvolvimento
+## 📝 Padrões de Desenvolvimento
 
-### .feature
+Para manter a consistência do template, siga estas diretrizes:
 
-``` gherkin
-Funcionalidade: Autenticação
-  Cenário: Login com sucesso
-    Dado que estou na tela de login
-    Quando eu preencho as credenciais válidas
-    Então devo ver a tela inicial
-```
+* **Page Objects:** Toda interação com a interface deve estar encapsulada em uma classe dentro de `tests/pages`.
+* **Locators:** Não utilize seletores hardcoded nos métodos. Mantenha-os em arquivos de `locators` separados para facilitar a manutenção.
+* **Hooks:** Utilize o `environment.py` para setup e teardown global (ex: abrir/fechar driver).
+* **Clean Code:** O projeto utiliza o **Ruff** para garantir que o código siga o PEP8.
 
-### Locators
+---
 
-``` python
-from appium.webdriver.common.appiumby import AppiumBy
+> **Nota:** Este é um projeto template. Para utilizá-lo em um contexto real, adicione o arquivo `.apk` ou `.app` na pasta `/apps` e configure as `capabilities` em `tests/config`.
 
-class LoginLocators:
-    INPUT_CPF = (AppiumBy.ID, "com.digi:id/input_cpf")
-    BTN_ENTRAR = (AppiumBy.ID, "com.digi:id/btn_entrar")
-```
-
-### Page Object
-
-``` python
-from tests.pages.base_page import BasePage
-from tests.pages.login.locators import LoginLocators
-
-class LoginPage(BasePage):
-    def realizar_login(self, cpf, senha):
-        self.escrever(LoginLocators.INPUT_CPF, cpf)
-        self.clicar(LoginLocators.BTN_ENTRAR)
-```
-
-## 🎯 Boas Práticas
-
--   Usar context.logger.info()
--   Steps simples chamando Pages
--   Não usar lógica de driver nos steps
--   Manter padrão de nomeação
+---
