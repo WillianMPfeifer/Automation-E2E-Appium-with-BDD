@@ -1,7 +1,7 @@
-# Testes E2E - Digi Pais e Alunos (Mobile)
+# Template para testes E2E Mobile com Appium
 
 Projeto de testes automatizados mobile utilizando **Appium + Behave
-(BDD)** para garantir a qualidade do aplicativo **Digi Pais e Alunos**.
+(BDD)** para garantir a qualidade do produto final
 
 ## 🛠️ Tecnologias Utilizadas
 
