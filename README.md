@@ -21,23 +21,86 @@ Projeto de testes automatizados mobile utilizando **Appium + Behave
     │   ├── config/         
     │   ├── features/       
     │   ├── pages/          
-    │   └── utils/          
-    ├── behave.ini          
-    └── pyproject.toml      
+    │   ├── utils/
+    │   └── locators/
+    │    
+    ├── behave.ini
+    ├── .gitignore
+    ├── README.md   
+    ├── DOCKER_README.md 
+    └── pyproject.toml    
+
+## ⚙️ Instalação
+
+Após clonar o repositório, sincronize todas as dependências (incluindo as de dev) com:
+
+``` bash
+uv sync --all-extras
+```
+
+### 🖥️ Iniciar Appium
+
+``` bash
+appium
+```
+
+### 🖥️ Iniciar Ambiente virtual
+
+``` bash
+venv/scripts/activate
+```
+
+## OBS: Lembrar de rodar um emulador antes de executar os testes, criar o .env preenchendo com dados de login e ajustar também os capabilities do desired capabilities no arquivo de configuração.
 
 ## ▶️ Executando os Testes
 
-### Modo Debug
+O projeto utiliza o **taskipy** para gerenciar os scripts. Todos os comandos seguem o padrão `uv run task <nome>`.
+
+Para listar todos os tasks disponíveis:
 
 ``` bash
-uv run behave --format plain --no-capture
+uv run task --list
 ```
 
-### Modo CI/CD
+---
 
-``` bash
-uv run behave --format progress --no-capture
-```
+### 🧹 Manutenção
+
+| Comando | Descrição |
+|---|---|
+| `uv run task clean` | Limpa relatórios e logs antigos |
+| `uv run task lint` | Verifica problemas de estilo no código |
+| `uv run task format` | Formata automaticamente os arquivos Python |
+
+### 📊 Relatórios
+
+| Comando | Descrição |
+|---|---|
+| `uv run task report` | Inicia o servidor Allure para visualizar relatórios |
+
+### 🚀 Execução Geral
+
+| Comando | Descrição |
+|---|---|
+| `uv run task test` | Limpa e executa **todos** os testes |
+| `uv run task test-debug` | Executa com saída detalhada (debug) |
+| `uv run task test-ci` | Execução compacta para pipelines CI/CD |
+| `uv run task test-allure` | Executa e abre o relatório Allure |
+
+### 🎯 Testes por Módulo (Developer Focus)
+
+| Comando | Descrição |
+|---|---|
+| `uv run task test-login` | Apenas os testes de **Login** |
+
+### 🐳 Execução via Docker (Taskipy)
+
+| Comando | Descrição |
+|---|---|
+| `uv run task docker-test` | Executa os testes dentro do container Docker |
+| `uv run task docker-test-build` | Reconstrói a imagem e executa os testes no Docker |
+| `uv run task docker-clean` | Remove containers, volumes e redes criados pelo Docker Compose |
+
 
 ## 📌 Comandos Úteis
 
@@ -45,31 +108,6 @@ uv run behave --format progress --no-capture
 
 ``` bash
 appium
-```
-
-### Feature específica
-
-``` bash
-uv run behave tests/features/login/autenticacao.feature --format plain --no-capture
-```
-
-### Por tags
-
-``` bash
-uv run behave --tags=@smoke --format plain --no-capture
-```
-
-### Relatório HTML
-
-``` bash
-uv run behave -f html -o reports/report.html
-```
-
-### Allure
-
-``` bash
-uv run behave -f allure_behave.formatter:AllureFormatter -o reports/allure
-allure serve reports/allure
 ```
 
 ## 📝 Desenvolvimento
